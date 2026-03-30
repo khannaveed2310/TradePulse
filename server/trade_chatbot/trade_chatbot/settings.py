@@ -31,7 +31,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+FRONTEND_URL = os.environ.get('FRONTEND_URL', '')
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    FRONTEND_URL,
+]
 
 
 # Application definition
