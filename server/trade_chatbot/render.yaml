@@ -3,7 +3,7 @@ services:
     name: tradepulse-api
     env: python
     buildCommand: chmod +x build.sh && ./build.sh
-    startCommand: gunicorn trade_chatbot.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --worker-class gevent --worker-connections 10 --timeout 600 --graceful-timeout 600
+    startCommand: gunicorn trade_chatbot.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
@@ -13,4 +13,22 @@ services:
         value: /usr/local/bin/chromedriver
       - key: PYTHONUNBUFFERED
         value: "1"
-```
+      - key: SERVICE_TYPE
+        value: web
+
+  - type: worker
+    name: tradepulse-worker
+    env: python
+    buildCommand: chmod +x build.sh && ./build.sh
+    startCommand: python manage.py run_scraper_worker
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: CHROME_BIN
+        value: /usr/bin/google-chrome
+      - key: CHROMEDRIVER_PATH
+        value: /usr/local/bin/chromedriver
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: SERVICE_TYPE
+        value: worker
