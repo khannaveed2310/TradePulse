@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: tradepulse-api
+    env: python
+    buildCommand: chmod +x build.sh && ./build.sh
+    startCommand: gunicorn trade_chatbot.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 300 --keep-alive 5
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: CHROME_BIN
+        value: /usr/bin/google-chrome
+      - key: CHROMEDRIVER_PATH
+        value: /usr/bin/chromedriver
