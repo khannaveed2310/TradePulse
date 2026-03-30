@@ -32,7 +32,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
      'localhost',
     '127.0.0.1',
-    'tradepulse-7o0a.onrender.com',  
+    'tradepulse-6726.onrender.com',  
     '.onrender.com', 
     ".vercel.app",    
 ]
