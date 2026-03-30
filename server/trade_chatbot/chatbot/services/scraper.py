@@ -327,6 +327,45 @@ def setup_driver():
     chrome_options.add_argument("--disable-extensions")
     chrome_options.add_argument("--disable-blink-features=AutomationControlled")
     chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument("--no-first-run")
+    chrome_options.add_argument("--no-zygote")           # important for Render
+    chrome_options.add_argument("--single-process")      # important for Render
+    chrome_options.add_argument("--disable-background-networking")
+    chrome_options.add_argument("--ignore-certificate-errors")
+    chrome_options.add_argument("--mute-audio")
+    chrome_options.add_experimental_option("prefs", {
+        "download.default_directory": DOWNLOAD_DIR,
+        "download.prompt_for_download": False,
+        "download.directory_upgrade": True,
+        "safebrowsing.enabled": False,
+    })
+
+    chrome_bin = os.environ.get("CHROME_BIN")
+    chromedriver_path = os.environ.get("CHROMEDRIVER_PATH")
+
+    print(f"[Driver] CHROME_BIN={chrome_bin}, CHROMEDRIVER_PATH={chromedriver_path}")
+
+    if chrome_bin and os.path.exists(chrome_bin):
+        chrome_options.binary_location = chrome_bin
+
+    if chromedriver_path and os.path.exists(chromedriver_path):
+        from selenium.webdriver.chrome.service import Service
+        service = Service(executable_path=chromedriver_path)
+        driver = webdriver.Chrome(service=service, options=chrome_options)
+    else:
+        driver = webdriver.Chrome(options=chrome_options)
+
+    driver.set_page_load_timeout(60)
+    return driver
+    chrome_options = Options()
+    chrome_options.add_argument("--headless=new")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--disable-software-rasterizer")
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+    chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("--remote-debugging-port=0")
     chrome_options.add_argument("--disable-background-networking")
     chrome_options.add_argument("--disable-sync")
