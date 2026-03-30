@@ -29,7 +29,12 @@ SECRET_KEY = 'django-insecure--pbsn^q%n$hja2qq5rtkymm1%s-=2dmaykgc6$4kw&9m!21k^p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+     'localhost',
+    '127.0.0.1',
+    'tradepulse-7o0a.onrender.com',  
+    '.onrender.com',     
+]
 
 FRONTEND_URL = os.environ.get('FRONTEND_URL', '')
 CORS_ALLOWED_ORIGINS = [
